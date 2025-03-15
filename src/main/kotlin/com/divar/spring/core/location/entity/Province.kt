@@ -1,15 +1,16 @@
 package com.divar.spring.core.location.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
+import org.jetbrains.annotations.NotNull
 
 @Entity(name = "province")
 data class Province(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-    val name: String,
-)
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
+    @NotNull
+    var name: String,
+    @NotNull
+    @OneToMany(mappedBy = "province", targetEntity = City::class)
+    var cities: MutableList<City>? = mutableListOf()
+)

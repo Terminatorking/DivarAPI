@@ -8,7 +8,20 @@ import org.springframework.stereotype.Service
 class ProvinceService(
     val repository: ProvinceRepository
 ) {
+
     fun findAll(): List<Province> {
         return repository.findAll()
+    }
+
+    fun save(entity: Province): Province {
+        return repository.save(entity)
+    }
+
+    fun saveAll(entity: MutableList<Province>): MutableList<Province> {
+        return repository.saveAll(entity)
+    }
+
+    fun count(): Long {
+        return repository.count()
     }
 }

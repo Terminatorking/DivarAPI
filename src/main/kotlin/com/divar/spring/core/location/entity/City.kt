@@ -1,19 +1,20 @@
 package com.divar.spring.core.location.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
+import org.jetbrains.annotations.NotNull
 
 @Entity(name = "city")
 data class City(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-    val name: String,
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
+    @NotNull
+    var name: String,
+    @NotNull
     @ManyToOne
-    @JoinColumn(name="province_id")
-    val province: Province,
+    @JoinColumn(name = "province_id")
+    var province: Province? = null,
+
+    @OneToMany(mappedBy = "city", targetEntity = NeighbourHood::class)
+    var neighborhoods: MutableList<NeighbourHood>? = mutableListOf()
 )
