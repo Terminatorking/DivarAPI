@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserService(private val userRepository: UserRepository) {
-
+    fun findByMobile(mobile: String): User? {
+        return userRepository.findByMobile(mobile)
+    }
     fun hashPassword(password: String): String {
         val bCryptPasswordEncoder = BCryptPasswordEncoder()
         return bCryptPasswordEncoder.encode(password)
