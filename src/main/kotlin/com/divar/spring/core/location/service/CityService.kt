@@ -1,7 +1,6 @@
 package com.divar.spring.core.location.service
 
 import com.divar.spring.core.location.entity.City
-import com.divar.spring.core.location.entity.Province
 import com.divar.spring.core.location.repository.CityRepository
 import org.springframework.stereotype.Service
 

@@ -7,23 +7,13 @@ import com.divar.spring.utils.provider.LocationDataProvider
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
-import org.springframework.transaction.annotation.Transactional
 
 @SpringBootApplication
 class DivarApplication
 
 fun main(args: Array<String>) {
     val context = runApplication<DivarApplication>(*args)
-    val triple = LocationDataProvider.getData()
-    val provinceService = context.getBean(ProvinceService::class.java)
-    val cityService = context.getBean(CityService::class.java)
-    val neighbourhoodService = context.getBean(NeighbourhoodService::class.java)
-    triple.first.forEach { province ->
-        provinceService.save(province)
-    }
-    triple.second.forEach {city->cityService.save(city)}
-    triple.third.forEach{neighbourHood -> neighbourhoodService.save(neighbourHood) }
-//initLocations(context)
+    initLocations(context)
 }
 
 fun initLocations(context: ConfigurableApplicationContext) {
