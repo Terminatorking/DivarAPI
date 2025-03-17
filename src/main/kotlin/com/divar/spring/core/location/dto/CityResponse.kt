@@ -8,10 +8,13 @@ data class CityResponse(
     val neighbourhoods: List<NeighbourhoodResponse>? = null
 )
 
-fun City.toCityResponse(isFillNeighbourhoods: Boolean = true): CityResponse {
+fun City.toCityResponse(includeNeighbourhoods: Boolean = true): CityResponse {
     return CityResponse(
         id = this.id,
         name = this.name,
-        neighbourhoods = if (isFillNeighbourhoods) this.neighborhoods?.map { it.toNeighbourhoodResponse() } else null,
+        neighbourhoods = if (includeNeighbourhoods)
+            this.neighborhoods?.map {
+                it.toNeighbourhoodResponse()
+            } else null,
     )
 }

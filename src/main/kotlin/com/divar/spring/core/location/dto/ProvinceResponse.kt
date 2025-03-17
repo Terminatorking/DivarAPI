@@ -8,10 +8,16 @@ data class ProvinceResponse(
     val cities: List<CityResponse>? = null
 )
 
-fun Province.toProvinceResponse(isFillCities: Boolean = true): ProvinceResponse {
+fun Province.toProvinceResponse(
+    includeCities: Boolean = true,
+    includeNeighbourhoods: Boolean = true,
+): ProvinceResponse {
     return ProvinceResponse(
         id = this.id,
         name = this.name,
-        cities = if (isFillCities) this.cities?.map { it.toCityResponse() } else null
+        cities = if (includeCities)
+            this.cities?.map {
+                it.toCityResponse(includeNeighbourhoods = includeNeighbourhoods)
+            } else null
     )
 }
