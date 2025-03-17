@@ -3,14 +3,26 @@ package com.divar.spring.core.parameter.entity
 import com.divar.spring.core.category.entity.Category
 import jakarta.persistence.*
 
+enum class DataType {
+    StringInput,
+    NumberInput,
+    CheckBoxInput,
+    FixedOption
+}
+
 @Entity(name = "parameter")
 data class Parameter(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0,
+
     val name: String,
-    val dataType: String,
+
+    val dataType: DataType,
+
+    val acceptedOptions: String? = null,
+
     @ManyToOne
     @JoinColumn(name = "category_id")
-    val category: Category
+    val category: Category,
 )
