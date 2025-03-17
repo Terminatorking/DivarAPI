@@ -2,7 +2,6 @@ package com.divar.spring.utils.response
 
 import org.springframework.http.HttpStatus
 
-
 interface ApiError {
     val httpStatus: HttpStatus
     val message: String
@@ -17,7 +16,6 @@ data class InvalidCredentialsError(
     override val httpStatus: HttpStatus = HttpStatus.UNAUTHORIZED,
     override val message: String = "نام کاربری یا رمز عبور اشتباهه! یه بار دیگه شانستو امتحان کن."
 ) : ApiError
-
 
 data class ServerError(
     override val httpStatus: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR,
