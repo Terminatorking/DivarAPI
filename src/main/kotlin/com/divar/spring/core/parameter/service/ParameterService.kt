@@ -37,7 +37,6 @@ class ParameterService(
             return parameters
         }
 
-
         val list: MutableList<Long> = mutableListOf<Long>()
         list.add(categoryId)
 

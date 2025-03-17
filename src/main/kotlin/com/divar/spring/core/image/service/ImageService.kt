@@ -1,5 +1,6 @@
 package com.divar.spring.core.image.service
 
+import com.divar.spring.core.ads.entity.Ads
 import com.divar.spring.core.image.entity.Image
 import com.divar.spring.core.image.repository.ImageRepository
 import org.springframework.stereotype.Service
@@ -11,20 +12,32 @@ import java.nio.file.StandardCopyOption
 import kotlin.io.path.pathString
 
 @Service
-class ImageService(val imageRepository: ImageRepository) {
-    private final val UPLOAD_DIR = "uploads/"
+class ImageService(
+    val repository: ImageRepository
+) {
+    private val uploadDir = "uploads/"
 
     init {
-        val dir = File(UPLOAD_DIR)
-        if (dir.exists().not()) {
-            dir.mkdirs()
-        }
+        val dir = File(uploadDir)
+        if (!dir.exists())
+            dir.mkdirs() // create folder id not exist.
     }
 
-    fun save(image: MultipartFile): Image {
-        val fileName = "${System.currentTimeMillis()}_${image.originalFilename}"
-        val filePath = Paths.get("$UPLOAD_DIR$fileName")
-        Files.copy(image.inputStream, filePath, StandardCopyOption.REPLACE_EXISTING)
-        return imageRepository.save(Image(path = filePath.pathString))
+    fun save(file: MultipartFile, ads: Ads): Image {
+        val filePath = Paths.get("$uploadDir${System.currentTimeMillis()}_${file.originalFilename}")
+        Files.copy(file.inputStream, filePath, StandardCopyOption.REPLACE_EXISTING)
+        val image = Image(path = filePath.pathString, ads = ads)
+
+        return repository.save(image)
+    }
+
+    fun saveAll(files: List<MultipartFile>, ads: Ads): List<Image> {
+        val images: MutableList<Image> = mutableListOf()
+        files.forEach { file ->
+            val filePath = Paths.get("$uploadDir${System.currentTimeMillis()}_${file.originalFilename}")
+            Files.copy(file.inputStream, filePath, StandardCopyOption.REPLACE_EXISTING)
+            images.add(Image(path = filePath.pathString, ads = ads))
+        }
+        return repository.saveAll(images)
     }
 }
